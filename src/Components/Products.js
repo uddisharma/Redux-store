@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react'
-
+import { add } from '../store/CartSlice';
+import { useDispatch } from 'react-redux';
 function Products() {
+    const dispatch = useDispatch();
     const [prod, setProd] = useState([]);
     useEffect(() => {
         const fetchprods = async () => {
-            const res = await fetch('http://localhost:5000/products')
-            const data = res.json();
+            const res = await fetch('https://fakestoreapi.com/products')
+            const data = await res.json();
             console.log(data);
             setProd(data);
         }
         fetchprods();
     }, [])
+    const handleadd = (prod) => {
+        dispatch(add(prod))
+    }
     return (
-        <>
-            <div>Products</div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
             {
-                prod.map((e) => (
-                    <div key={e.id}>
-                        <img style={{ height: '250px', width: '250px' }} src={e.image} alt={e.id} />
-                        <p>{e.price}</p>
-                        <p>{e.title}</p>
-                        <button>add to cart</button>
+                prod.map((prod) => (
+                    <div key={prod.id}>
+                        <img style={{ height: '200px', width: '200px' }} src={prod.image} alt="" />
+                        <p>{prod.title}</p>
+                        <p>{prod.price}</p>
+                        <button onClick={() => handleadd(prod)}>Add to cart</button>
                     </div>
                 ))
             }
-        </>
+        </div>
+
 
     )
 }

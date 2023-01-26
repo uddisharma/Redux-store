@@ -5,7 +5,7 @@ function Home() {
     return (
         <div>
             <h1>This is Redux Store website</h1>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)' }}>
+            <div >
                 <Products />
             </div>
         </div>
